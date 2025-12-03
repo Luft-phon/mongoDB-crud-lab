@@ -12,63 +12,122 @@ Enter your choice: ...
 ```
 
 ## 🌐 What is this lab project?
-It is going to make some alterations to that model, and build a CRUD application to perform some updates to it.
+This lab is a menu-driven command-line application that demonstrates how to work with MongoDB using Python.
+The goal is to practice:
+- Connecting to MongoDB
+- Executing CRUD-like operations
+- Using MongoDB sessions and transactions
+- Building a simple interactive menu system
+- The project focuses on customers, products, orders, employees, and office relationships
 
 ## ⭐ It allows user to:
-- Insert new rows into each of the tables.
-- Report out the data in a selected row from each of the tables.
-- Delete a selected row, or give them an error message if such a deletion would leave orphaned rows.
-- Update a selected row
-  
-## 📌 An abbreviated BOM for an idealized motorcycle
- <img alt="Fav Icon Png" src="https://github.com/Luft-phon/cecs323_orm_sqlalchemy_lab/blob/list/photos/BOM.png"/>
+ INSERT data
+- Add orders for existing customers
+- Add employees (Managers or Sales Representatives)
+- Automatically link employees to offices, subordinates, or customers
 
- <details>
-   <summary align="center">VIEW MORE PHOTOS HERE</summary>
-    <img alt="Fav Icon Png" src="https://github.com/Luft-phon/cecs323_orm_sqlalchemy_lab/blob/list/photos/ERD.png" />
-    <img alt="Fav Icon Png" src="https://github.com/Luft-phon/cecs323_orm_sqlalchemy_lab/blob/list/photos/Enterprise%20description.jpg"/>
- </details>
+LIST data
+- Show a detailed summary of a selected order, including line items and total price
+- Display a full employee hierarchy starting with any chosen employee
+
+ABORT changes
+- Abort the active MongoDB transaction to undo all changes made during the session
+
+EXIT the application
+- Cleanly exit the program and end the session
+
+## 🗂 Data Model Overview
+
+The project uses the following MongoDB collections:
+
+customers, products, orders, employees, offices, managers, sales_representatives
  
 ## 🛠 Setup
 1. Clone this repository
 ```
-https://github.com/Luft-phon/cecs323_orm_sqlalchemy_lab.git
+git clone https://github.com/<your-username>/<your-mongodb-crud-lab>.git
+cd <your-mongodb-crud-lab>
 ```
 
 2. Open the project folder
    
-3. Create config.ini file, we must defind  
+3. Install dependencies
 ```
-[credentials]
-userid = your-database-userid
-password: your-database-password
-host = localhost
-port = ...
-database = your-database-management-system
+pip install pymongo
+
+```
+4. Create config.ini file, we must defind  
+```
+[server]
+host = 
+port = 
+database = 
+
+[operational]
+rollback = False
+restart = True
+
 ```
 
-4. Run the program
+5. Run the program
 ```
 python main.py
 ```
-
-5. The program will ask to enter the database schema
-   - Enter "Public"
+## ⚝ Tools
+- Visual Studio Code
+- Datagrip
+- MongoDB Compass
 
 ## 📁 Project Structure
 
 ```
 Project/
-├── db_connection.py/        # configuration to connect postgres
-├── functions.py/            # methods  
-├── main.py/       
-├── menu_definition.py/      
-├── menu.py/
-├── option.py/    
-├── part.py/                 # Mapped class
-├── usage.py/                # Mapped class
-├── vendor.py/               # Mapped class
-├── piecePart.py/            # Mapped class
-├── SQLAlchemyUltilities.py/ # Check constraints
-├── orm_base.py/      
+├── config.ini            # MongoDB connection & operational flags
+├── db_connection.py      # MongoDB client + session utilities
+├── functions.py          # Core operations: add/list orders & employees
+├── main.py               # Entry point; transaction + menu loop
+├── menu_definition.py    # Main/Add/List menu structures
+├── menu.py               # Menu class: input/validation logic
+└── option.py             # Option class for menu prompts
+    
 ```
+
+## 🧭 Using the Application
+
+### ▶️ Add Menu
+
+<details>
+  <summary align="left"><strong>Add Order</strong></summary>
+
+  - Select customer  
+  - Choose products & quantities  
+  - App validates stock and builds an order record  
+
+</details>
+
+<details>
+  <summary align="left"><strong>Add Employee</strong></summary>
+
+  - Enter employee info  
+  - Choose role (Manager / Sales Rep)  
+  - Optionally assign subordinate employees or customers  
+
+</details>
+
+### ▶️ List Menu
+
+**List Order**
+
+- Enter customer name and order date  
+- The program prints a fully formatted invoice-style view  
+
+**List Employee**
+
+- Select an employee  
+- Displays a recursive hierarchy of subordinates  
+
+### ▶️ Abort  
+Rolls back the active MongoDB transaction — useful for testing.
+
+### ▶️ Exit  
+Safely exits the program.
