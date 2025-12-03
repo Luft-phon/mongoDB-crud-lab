@@ -45,8 +45,7 @@ customers, products, orders, employees, offices, managers, sales_representatives
 ## 🛠 Setup
 1. Clone this repository
 ```
-git clone https://github.com/<your-username>/<your-mongodb-crud-lab>.git
-cd <your-mongodb-crud-lab>
+https://github.com/Luft-phon/mongoDB-crud-lab.git
 ```
 
 2. Open the project folder
